@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-async function verificationToken(email) {
+export async function verificationToken(email) {
 if(!email) return null;
 const payload={
     userEmail:email
@@ -7,7 +7,8 @@ const payload={
 const token= jwt.sign(payload,process.env.EMAIL_VERIFICATION_TOKEN_SECRET,{expiresIn:'1h'});
 return token;
 }
-async function verifyEmailToken(token){
+
+export async function verifyEmailToken(token){
     if(!token) return null;
     try {
         const decodedToken =jwt.verify(token,process.env.EMAIL_VERIFICATION_TOKEN_SECRET);
@@ -22,5 +23,3 @@ async function verifyEmailToken(token){
           } 
         }
 }
-
-export default {verificationToken,verifyEmailToken};

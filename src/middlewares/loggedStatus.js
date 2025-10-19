@@ -23,16 +23,14 @@ try {
     const decodedRefresh =verifyRefreshToken(refreshToken);
     if(decodedRefresh.success)
     {
-        const token =
+        const token ="dcdwfwefewf";
+        console(token);
     }
  }
  next()
 } catch (error) {
-    
+    console(error);
 }
-
- 
-
 }
 
 export default preventLoggedInAccess;

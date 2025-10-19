@@ -6,14 +6,14 @@ if(!to || !subject || !text) return false;
         const transporter= nodeMailer.createTransport({
             service:'gmail',
             auth:{
-                user:process.env.EMAIL_USER,
+                user:process.env.EMAIL_USERID,
                 pass:process.env.EMAIL_PASSWORD
             }
         })
 
             await transporter.verify();
         const mailOptions={
-            from:process.env.EMAIL_USER,
+            from:process.env.EMAIL_USERID,
             to:to,
             subject:subject,
             text:text,
