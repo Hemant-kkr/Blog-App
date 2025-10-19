@@ -5,6 +5,7 @@ import AppError from '../utils/appErrors.js';
   if (process.env.NODE_ENV == "production") {
     console.log(err);
   }
+  // console.log(err.isOperational , err instanceof AppError)
   if (err.isOperational && err instanceof AppError) {
   return   res.status(err.statusCode).json({
       status: err.status,
