@@ -8,7 +8,7 @@ const token= jwt.sign(payload,process.env.EMAIL_VERIFICATION_TOKEN_SECRET,{expir
 return token;
 }
 
-export async function verifyEmailToken(token){
+export  async function verifyEmailToken(token){
     if(!token) return null;
     try {
         const decodedToken =jwt.verify(token,process.env.EMAIL_VERIFICATION_TOKEN_SECRET);
