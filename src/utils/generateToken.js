@@ -25,6 +25,7 @@ function accessTokenGenerator(user) {
   }
   const payload = {
     userId: user._id,
+    userEmail: user.email,
     role: user.role,
     isBlocked: user.isBlocked,
   };
@@ -55,12 +56,12 @@ function verifyRefreshToken(token) {
 
 function verifyAccessToken(token) {
   if (!token) {
-    return { success: false, error: "Token not found!" };
+    return false;
   }
 
   try {
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    return { success: true, decoded };
+    return decoded;
   } catch (error) {
     if (error.name === "TokenExpiredError") {
       return { success: false, error: "Access token has expired. Please login again." };
