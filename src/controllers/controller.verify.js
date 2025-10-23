@@ -10,14 +10,14 @@ const verifyUser = catchAsync(async (req, res,next) => {
   const token = req.query.token;
   if (!token) throw new AppError("Token is missing", 400);
 
-  // 1️⃣ Decode and verify token
+  // 1️ Decode and verify token
   const payload = await verifyEmailToken(token); // throws error if invalid/expired
 
-  // 2️⃣ Find user by email from payload
+  // 2️ Find user by email from payload
   const user = await isUser(payload.userEmail);
   if (!user) throw new AppError("User not found", 404);
 
-  // 3️⃣ Check if already verified
+  // 3️ Check if already verified
   if (user.isVerified) {
     return res.status(200).json({
       status: "success",
@@ -25,7 +25,7 @@ const verifyUser = catchAsync(async (req, res,next) => {
     });
   }
 
-  // 4️⃣ Update user's verification status in DB
+  // 4️ Update user's verification status in DB
   const verifiedUser = await userModel.findOneAndUpdate(
     { email: user.email },
     { isVerified: true },
@@ -36,7 +36,7 @@ const verifyUser = catchAsync(async (req, res,next) => {
     throw new AppError("Unable to verify user", 500);
   }
 
-  // 5️⃣ Send success response
+  // 5️ Send success response
   return res.status(200).json({
     status: "success",
     message: "User verified successfully",

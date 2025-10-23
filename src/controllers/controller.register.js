@@ -4,7 +4,7 @@ import isUser from "../services/checkUser.js";
 import userModel from "../models/model.user.js";
 import sendEmail from "../services/mailsender.js";
 import { verificationToken } from "../utils/emailVerificationToken.js";
-const register = catchAsync(async (req, res, next) => {
+const register = catchAsync(async  (req, res, next) => {
   const body = req.body;
   const user = body.user;
 
