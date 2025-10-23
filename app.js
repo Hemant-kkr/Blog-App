@@ -3,6 +3,7 @@ const app = express();
 
 //importing inbuilt moodules
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
 //importing Local Modules
 import errorHandler from "./src/middlewares/ErrorHandler.js";
@@ -23,6 +24,7 @@ dotenv.config();
 //using inbuilt middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Routes Authentication / User Management
 app.use("/api/auth", authRoutes);
@@ -48,7 +50,7 @@ app.all(/.*/, (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
-//Global error handler (must be last)
-app.use(errorHandler);
+// //Global error handler (must be last)
+// app.use(errorHandler);
 
 export default app;
