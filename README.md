@@ -28,7 +28,6 @@ Supports **CRUD posts, comments, likes, search, analytics, pagination, and role-
 
 ## 🧩 Architecture & Flow
 
-```mermaid
 sequenceDiagram
     participant Guest
     participant User
@@ -56,6 +55,7 @@ sequenceDiagram
     API->>DB: Delete post
     DB-->>API: Success
     API-->>Admin: Post deleted
+
 
 
 **Blogify API** is a **RESTful backend API** for a modern blogging platform.  
