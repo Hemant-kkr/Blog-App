@@ -49,20 +49,22 @@ const userSchema = mongoose.Schema(
 );
 
 userSchema.pre("save", async function (next) {
+  // Hash password if modified
   if (this.isModified("password")) {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
   }
-  if (
-    this.isModified(this.userSessions.refreshToken) &&
-    this.userSessions.refreshToken
-  ) {
-    const salt = await bcrypt.genSalt(10);
-    this.userSessions.refreshToken = await bcrypt.hash(
-      this.userSessions.refreshToken,
-      salt
-    );
+
+  // Hash each refreshToken if modified
+  if (this.isModified("userSessions")) {
+    for (let session of this.userSessions) {
+      if (session.isModified?.("refreshToken")) {
+        const salt = await bcrypt.genSalt(10);
+        session.refreshToken = await bcrypt.hash(session.refreshToken, salt);
+      }
+    }
   }
+
   next();
 });
 
