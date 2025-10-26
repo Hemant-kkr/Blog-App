@@ -6,7 +6,7 @@ import { verifyEmailToken } from "../utils/emailVerificationToken.js";
 const resetPassword = catchAsync(async (req, res, next) => {
   const { token, newPassword } = req.body;
 
-  // 1️⃣ Validate input
+  // 1️ Validate input
   if (!token || !newPassword) {
     throw new AppError("Token and new password are required", 400);
   }
@@ -15,23 +15,23 @@ const resetPassword = catchAsync(async (req, res, next) => {
     throw new AppError("Password must be at least 6 characters long", 400);
   }
 
-  // 2️⃣ Verify token
+  // 2️ Verify token
   const decoded = await verifyEmailToken(token);
   if (!decoded || !decoded.userEmail) {
     throw new AppError("Invalid or expired token", 401);
   }
 
-  // 3️⃣ Find user
+  // 3️ Find user
   const user = await userModel.findOne({ email: decoded.userEmail });
   if (!user) {
     throw new AppError("User not found", 404);
   }
 
-  // 4️⃣ Update password — pre('save') will hash it
+  // 4️ Update password — pre('save') will hash it
   user.password = newPassword;
   await user.save();
 
-  // 5️⃣ Response
+  // 5️ Response
   res.status(200).json({
     status: "success",
     message: "Password has been reset successfully. You can now log in.",
